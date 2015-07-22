@@ -1,0 +1,17 @@
+# Site settings
+title: PHP Developer Notes
+header-img: img/home-bg.jpg
+email: manuele.menozzi@gmail.com
+description: "A collection of notes about PHP development: Magento, Symfony, automated testing, continous integration/delivery and much more..."
+baseurl: ""
+url: "http://mmenozzi.github.io"
+twitter_username: mmenozzi
+github_username:  mmenozzi
+facebook_username:  manuele.menozzi
+
+# Build settings
+markdown: kramdown
+highlighter: pygments
+permalink: pretty
+paginate: 5
+exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
