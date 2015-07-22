@@ -25,3 +25,5 @@ The architecture of these Magento models sucks and there is no separation betwee
     }
 
 Note that this completely mock all calls to `Mage_Catalog_Model_Session::start()` and avoid the error shown above but should be tweaked accordling to your specific needs.
+
+More on this topic can be found on the related [GitHub issue](https://github.com/EcomDev/EcomDev_PHPUnit/issues/206) with some workaround solutions.
