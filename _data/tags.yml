@@ -1,0 +1,8 @@
+- slug: magento
+  name: Magento
+
+- slug: ecomdev-phpunit
+  name: Ecomdev_PHPUnit
+
+- slug: tdd
+  name: TDD

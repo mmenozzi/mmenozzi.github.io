@@ -3,7 +3,7 @@ layout:     post
 title:      "Session handling while testing Magento with Ecomdev_PHPUnit"
 date:       2015-07-21 12:00:00
 author:     "Manuele Menozzi"
-tags: [Magento, Ecomdev_PHPUnit, TDD]
+tags: [magento, ecomdev-phpunit, tdd]
 ---
 
 When testing Magento with Ecomdev_PHPUnit the following error could occur:
