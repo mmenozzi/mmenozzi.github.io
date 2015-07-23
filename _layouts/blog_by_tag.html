@@ -32,6 +32,9 @@ layout: default
                         </a>
                         <p class="post-meta">Posted on {{ post.date | date: "%B %-d, %Y" }}</p>
                     </div>
+                    {% if forloop.last == false %}
+                        <hr>
+                    {% endif %}
                 {% endfor %}
             {% else %}
                 <p>There are no posts for this tag.</p>
