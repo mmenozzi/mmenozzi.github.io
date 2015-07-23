@@ -136,6 +136,7 @@ hr.small {
   background-size: cover;
   -o-background-size: cover;
   margin-bottom: 50px;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 1) !important;
 }
 .intro-header .site-heading,
 .intro-header .post-heading,
@@ -145,9 +146,11 @@ hr.small {
 }
 @media only screen and (min-width: 768px) {
   .intro-header .site-heading,
-  .intro-header .post-heading,
   .intro-header .page-heading {
-    padding: 150px 0;
+    padding: 110px 0;
+  }
+  .intro-header .post-heading {
+    padding: 70px 0;
   }
 }
 .intro-header .site-heading,
@@ -167,24 +170,20 @@ hr.small {
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 300;
   margin: 10px 0 0;
-  text-shadow: 4px 4px 4px #333333;
 }
 @media only screen and (min-width: 768px) {
   .intro-header .site-heading h1,
   .intro-header .page-heading h1 {
-    font-size: 80px;
-    text-shadow: 4px 4px 4px #333333;
+    font-size: 72px;
   }
 }
 .intro-header .post-heading h1 {
   font-size: 35px;
-  text-shadow: 4px 4px 4px #333333;
 }
 .intro-header .post-heading .subheading,
 .intro-header .post-heading .meta {
   line-height: 1.1;
   display: block;
-  text-shadow: 4px 4px 4px #333333;
 }
 .intro-header .post-heading .subheading {
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -203,7 +202,7 @@ hr.small {
 }
 @media only screen and (min-width: 768px) {
   .intro-header .post-heading h1 {
-    font-size: 55px;
+    font-size: 42px;
   }
   .intro-header .post-heading .subheading {
     font-size: 30px;
