@@ -7,7 +7,7 @@ baseurl: ""
 url: "http://mmenozzi.github.io"
 twitter_username: mmenozzi
 github_username:  mmenozzi
-facebook_username:  manuele.menozzi
+#facebook_username:  manuele.menozzi
 
 # Build settings
 markdown: kramdown
