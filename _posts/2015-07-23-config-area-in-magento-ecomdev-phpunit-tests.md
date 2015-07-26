@@ -30,3 +30,4 @@ To solve this problem you have to remove `frontend` area from configuration afte
 		Mage::app()->removeEventArea(Mage_Core_Model_App_Area::AREA_FRONTEND);
 	}
 
+Update: thanks to [@fschmelger](https://twitter.com/fschmengler), I must point out that in controllers tests, proper area is loaded automatically by Ecomdev_PHPUnit, so it's not needed explicit `loadArea` call stated above.
