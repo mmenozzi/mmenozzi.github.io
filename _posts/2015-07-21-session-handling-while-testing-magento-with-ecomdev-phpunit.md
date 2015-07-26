@@ -8,7 +8,11 @@ tags: [magento, ecomdev-phpunit, tdd]
 
 When testing Magento with Ecomdev_PHPUnit the following error could occur:
 
-    Exception: Warning: session_start(): Cannot send session cookie - headers already sent by (output started at [...]/vendor/phpunit/phpunit/src/Util/Printer.php:172)  in [...]/app/code/core/Mage/Core/Model/Session/Abstract/Varien.php on line 123
+<pre>
+    <code class="nohighlight">
+Exception: Warning: session_start(): Cannot send session cookie - headers already sent by (output started at [...]/vendor/phpunit/phpunit/src/Util/Printer.php:172)  in [...]/app/code/core/Mage/Core/Model/Session/Abstract/Varien.php on line 123
+    </code>
+</pre>
 
 This error happens because somewhere in your tested code there is an itialization to a Magento's session singleton/model that casues a `session_start` which in turn needs to set the related cookie/session header. The error is thrown because the output has already started due to PHPUnit initial output.
 
