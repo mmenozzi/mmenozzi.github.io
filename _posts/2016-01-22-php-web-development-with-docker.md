@@ -6,7 +6,7 @@ author:   "Manuele Menozzi"
 tags:     [devops, docker]
 ---
 
-As web developer I always have to deal with the fact that every project has its own dependencies and requirements. At application level a good dependency management tool does the job (as PHP developer I love [Composer](https://getcomposer.org/)) but a web project has not only application dependencies, there are also system/infrastructure requirements. On the production or test environment we can setup project's specific dependencies because these environments are often dedicated to that project but this may not be true for local development environment. This is especially the case for me because I have to deal with many different projects.
+As web developer I always have to deal with the fact that every project has its own dependencies and requirements. At application level a good dependency management tool does the job (as PHP developer I love [Composer](https://getcomposer.org/)) but a web project has not only application dependencies, there are also system/infrastructure requirements. On the production or test environment we can setup project's specific dependencies because these environments are often dedicated to that project but this may not be true for local development environment. This is especially true for me because I have to deal with many different projects.
 
 Anyway, until few days ago, I always developed my applications with the classic [LAMP stack](https://en.wikipedia.org/wiki/LAMP_(software_bundle)) running directly on my local (and phisical) machine. In the past I tried [Vagrant](https://www.vagrantup.com/) but then I always come back to my local machine. Why? Because I always wanted to use my host’s IDE to edit project source files but run applications inside a virtual machine and keep source files on the host machine it’s not as easy as it seems. One of the most commonly used approach is to have the project’s directory on the host system mounted inside the virtual machine. This is, for example, the standard approach for Vagrant which mounts current working directory of the host in `/vagrant` path of the virtual machine. I always found that this approach has performance issues because the mounted file system is very slow even with an NFS mount. This is especially true for PHP which does much filesystem access for class loading. Besides this a virtual machine for each projects requires much disk space. So, as I said, I always come back to my local machine.
 
@@ -43,17 +43,17 @@ So, for example, I can run the container image with the following command:
 	$ docker run -p 80:80 webgriffe/php-apache-base
 
 The `-p` option allows to map a port of the host to a port of the container. As you know Apache, by default, exposes port 80 so with `-p 80:80` I can connect to port 80 of my host and "see" Apache running on the container.
-Thanks to the Dockerfile I can also build a custom container for a project with specific needs. For example if in another project where I need PHP 5.5 and the PHP mongodb extension I can place a Dockerfile in my project directory with something like this:
+Thanks to the Dockerfile I can also build a custom container for a project with specific needs. For example, if in another project I need PHP 5.5 and the PHP mongodb extension then I can place a Dockerfile in my project directory with something like this:
 
 	FROM webgriffe/php-apache-base:5.5
-	RUN docker-php-ext-install mongo // I didn't really tested this line (it's only an example)
+	RUN docker-php-ext-install mongo // I have not really tested this line (it's only an example)
 
 Then I can build the container from the Dockerfile (assuming it’s in the current working directory):
 
 	$ docker build -t my-container-name .
 	$ docker run -p 80:80 my-container-name
 	
-Develop PHP applications doesn't consist only into running it from Apache but also from running it from command line. I may also need to run automated tests or install dependencies with Composer. When I need to do this, with Docker I can easily access to the PHP-Apache container through SSH:
+Developing PHP applications doesn't consist only into running it from Apache but also from running it from command line. I may also need to run automated tests or install dependencies with Composer. When I need to do this, with Docker I can easily access to the PHP-Apache container through SSH:
 
 	manuele@host$ docker exec -ti php-apache-container-name /bin/bash
 
@@ -69,7 +69,7 @@ Project source files on the container
 
 Docker containers are, by default, isolated because they have to be portable. To achieve this isolation and portability Docker containers's file system is volatile. This means that you lose every change to container's files when you stop it. So Docker containers are not designed to be "editable", them should be "immutable".
 
-As you understand  this isolation isn't indicated for development purposes because I would like to edit project source files on my host system and immediately then run that change on the Docker container.
+As you may notice, this isolation isn't indicated for development purposes because I would like to edit project source files on my host system and then immediately run that change on the Docker container.
 Fortunately Docker has a [data volume feature](https://docs.docker.com/engine/userguide/dockervolumes/) which allows to mount an host folder inside the container. For example, given that the current working directory is `/path/to/my/project` I can run:
 
 	$ docker run -p 80:80 -v .:/var/www/html image
@@ -81,7 +81,7 @@ Performance improvements on OS X
 
 As said before, on OS X Docker runs on a Oracle VirtualBox Linux virtual machine (also known as [docker machine](https://docs.docker.com/machine/)). To make work the data volume feature the docker machine mounts the user's home directory from the host to the docker machine itself. This mount is done through the vboxsf which is terribly slow! I think that performances are important even for development environments because allows people to be more productive. With this setup I found that a [Magento](http://magentocommerce.com) 1.x application running on Docker was over 10 times slower than the same application running on my host. So I decided to keep searching a more performant solution.
 
-First I tried [dinghy](https://github.com/codekitchen/dinghy) which is basically an alternative docker machine but with an NFS mount instead of vboxsf. NFS is much more fast so, with dinghy, things have improved a lot (4/5 times slower than host) but it wasn't enough for me because I didn’t want a performance loss by switching to Docker as dev environment.
+First I tried [dinghy](https://github.com/codekitchen/dinghy) which is basically an alternative docker machine but with an NFS mount instead of vboxsf. NFS is much faster so, with dinghy, things have improved a lot (4/5 times slower than host) but it wasn't enough for me because I didn’t want a performance loss by switching to Docker as dev environment.
 
 So I finally found [Docker Unison](https://github.com/leighmcculloch/docker-unison) which is a two-way fast file sync system. Basically I have to start a special Docker container which runs the Unison server:
 
@@ -95,7 +95,7 @@ Combining Unison with fswatch (`brew install fswatch`) I can continuously sync m
 
 	$ fswatch -o . | xargs -n1 -I{} unison . socket://<docker>:5000/ -ignore 'Path .git' -auto -batch
 
-Also notice that Unison is two-way sync so not even changes from host will be pushed to Docker but also the viceversa. This is important because many frameworks have code generation features while running so I want back this files to my host to better read code and debug during development.
+Also notice that Unison is two-way sync, so not only host changes will be pushed to Docker but also the viceversa. This is important because many frameworks have code generation features while running so I want back this files to my host to better read code and debug during development.
 Then I can use the `--volumes-from` feature of Docker to mount the `/unison` path of Unison container as a volume inside the docker container which runs the application.
 
 	$ docker run --volumes-from $CID webgriffe/php-apache-base
@@ -114,14 +114,14 @@ Almost every PHP web application needs a database for data persistence. Most of 
 
 	$ docker run mariadb
 
-Notice that I use [mariadb](https://hub.docker.com/_/mariadb/) instead of Oracle’s [mysql](https://hub.docker.com/_/mysql/) image because I found that is much more fast and is completely open source.
+Notice that I use [mariadb](https://hub.docker.com/_/mariadb/) instead of Oracle’s [mysql](https://hub.docker.com/_/mysql/) image because I found that is quite faster and is completely open source.
 But as I said before Docker containers filesystem is volatile and, of course, database data are stored on the filesystem (precisely under `/var/lib/mysql`) so what happens with Docker is that, with this setup, if I stop the MySQL container I lose all of my database changes. I don't want this so, as before, Docker’s volumes feature is the solution:
 
 	$ docker run -v /var/lib/mysql mariadb
 
 With this command Docker mounts a folder of the host system of its choice into the `/var/lib/mysql` path of the container so I can restart it without losing my database data.
 
-But what if I need to update MySQL container? Notice that when you update a Docker container (for example because you want an upgraded version of the `mariadb` image) it’s recreated and volume data will be lost so if I update the mysql container I lose database data.
+But what if I need to update MySQL container? Notice that when you update a Docker container (for example because you want an upgraded version of the `mariadb` image) it’s recreated and volume data will be lost so if I update the mysql container I'd lose database data.
 Fortunately I can do a [data-only container](https://medium.com/@ramangupta/why-docker-data-containers-are-good-589b3c6c749e):
 
 	$ CID=$(docker run -d -v /var/lib/mysql tianon/true)
@@ -151,7 +151,7 @@ And so on, we can go over and have a container for every component that our appl
 Putting it all together - Docker Compose
 ----------------------------------------
 
-As you may understand, could be very unconfortable start several containers every time that we have to start our development environment. To overcome this there's [Docker Compose](https://docs.docker.com/compose/) which allows to specify a multiple containers setup in a single YML file (`docker-compose.yml`). Then it’s possible to start all the required containers with a single command.
+As you may understand, it could be very unconfortable to start several containers every time that we have to start our development environment. To overcome this there's [Docker Compose](https://docs.docker.com/compose/) which allows to specify a multiple containers setup in a single YML file (`docker-compose.yml`). Then it’s possible to start all the required containers with a single command.
 For example, this is my `docker-compose.yml` for a Magento 1.x application:
 
     php:
