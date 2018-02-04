@@ -21,3 +21,6 @@
 
 - slug: ssl
   name: SSL
+
+- slug: magento2
+  name: Magento 2
