@@ -1,24 +1,47 @@
-#Clean Blog by Start Bootstrap - Jekyll Version
+Documentazione Blog
+===================
 
-The official Jekyll version of the Clean Blog theme by [Start Bootstrap](http://startbootstrap.com/).
+Il blog in questione è fatto con [Jekyll](https://jekyllrb.com/) e hostato con GitHub Pages. E' necessario quindi installare localmente la gemma `jekyll`.
 
-###[View Live Demo &rarr;](http://ironsummitmedia.github.io/startbootstrap-clean-blog-jekyll/)
+Servire il blog localmente
+--------------------------
 
-## Before You Begin
+E' possibile servire il blog localmente per avere una preview di ciò che sarà pubblicato con il comando:
 
-In the _config.yml file, the base URL is set to /startbootstrap-clean-blog-jekyll which is this themes gh-pages preview. It's recommended that you remove the base URL before working with this theme locally!
+```bash
+jekyll serve --watch
+```
 
-It should look like this:
-`baseurl: ""`
+Creare un nuovo post
+--------------------
 
-## What's Included
+E' presente uno script di utilità per creare un nuovo post in `bin/create_post.sh`. Il suo uso è:
 
-A full Jekyll environment is included with this theme. If you have Jekyll installed, simply run `jekyll serve` in your command line and preview the build in your browser. You can use `jekyll serve --watch` to watch for changes in the source files as well.
+```bash
+bash bin/create_post.sh <titolo>
+```
 
-A Grunt environment is also included. There are a number of tasks it performs like minification of the JavaScript, compiling of the LESS files, adding banners to keep the Apache 2.0 license intact, and watching for changes. Run the grunt default task by entering `grunt` into your command line which will build the files. You can use `grunt watch` if you are working on the JavaScript or the LESS.
+Ad esempio:
 
-You can run `jekyll serve --watch` and `grunt watch` at the same time to watch for changes and then build them all at once.
+```bash
+bash bin/create_post.sh "Il titolo del mio nuovo post"
+```
 
-## Support
+Le doppie virgolette sono importanti in quanto fanno in modo che tutto il titolo sia considerato.
 
-Visit Clean Blog's template overview page on Start Bootstrap at http://startbootstrap.com/template-overviews/clean-blog/ and leave a comment, email feedback@startbootstrap.com, or open an issue here on GitHub for support.
+Creare un nuovo tag
+-------------------
+
+E' presente uno script di utilità per creare un nuovo tag in `bin/create_tag.sh`. Il suo uso è:
+
+```bash
+bash bin/create_tag.sh <nome_tag>
+```
+
+Ad esempio:
+
+```bash
+bash bin/create_tag.sh "Il mio nuovo tag"
+```
+
+Anche in questo caso le doppie virgolette sono importanti.
